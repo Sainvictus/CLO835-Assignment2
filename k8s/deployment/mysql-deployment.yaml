@@ -18,11 +18,11 @@ spec:
         image: 549079173707.dkr.ecr.us-east-1.amazonaws.com/mysql:latest
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 500Mi
           limits:
-            cpu: 200m
-            memory: 200Mi
+            cpu: 1
+            memory: 1Gi
         ports:
         - containerPort: 3306
         env:
@@ -30,3 +30,10 @@ spec:
           value: "pw"
         - name: MYSQL_DATABASE
           value: "employees"
+        readinessProbe:
+          exec:
+            command: ["mysqladmin", "ping", "-h", "localhost"]
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      imagePullSecrets:
+      - name: ecr-secret
