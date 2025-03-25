@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: webapp-rs
+  name: employment-app-rs
   namespace: employee-app
 spec:
   replicas: 3
@@ -14,8 +14,8 @@ spec:
         app: employees
     spec:
       containers:
-      - name: webapp
-        image: nginx:alpine
+      - name: employment-app
+        image: 549079173707.dkr.ecr.us-east-1.amazonaws.com/employment-app:latest
         resources:
           requests:
             cpu: 100m
@@ -24,4 +24,17 @@ spec:
             cpu: 200m
             memory: 200Mi
         ports:
-        - containerPort: 80
+        - containerPort: 8080
+        env:
+        - name: DBHOST
+          value: "mysql.mysql-db.svc.cluster.local"
+        - name: DBPORT
+          value: "3306"
+        - name: DBUSER
+          value: "root"
+        - name: DBPWD
+          value: "pw"
+        - name: DATABASE
+          value: "employees"
+        - name: APP_COLOR
+          value: "blue"
