@@ -31,3 +31,5 @@ spec:
       value: "employees"
     - name: APP_COLOR
       value: "blue"
+  imagePullSecrets:
+  - name: ecr-secret

@@ -23,3 +23,5 @@ spec:
       value: "pw"
     - name: MYSQL_DATABASE
       value: "employees"
+  imagePullSecrets:
+  - name: ecr-secret
