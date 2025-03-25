@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: employee-app
+  name: employapp
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: mysql-db
+  name: mysqlapp

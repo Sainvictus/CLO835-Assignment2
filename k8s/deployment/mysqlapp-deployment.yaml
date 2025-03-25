@@ -1,8 +1,8 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: mysql-rs
-  namespace: mysql-db
+  name: mysqlapp-deployment
+  namespace: mysqlapp
 spec:
   replicas: 1
   selector:
@@ -16,19 +16,10 @@ spec:
       containers:
       - name: mysql
         image: 549079173707.dkr.ecr.us-east-1.amazonaws.com/mysql:latest
-        resources:
-          requests:
-            cpu: 500m
-            memory: 500Mi
-          limits:
-            cpu: 1
-            memory: 1Gi
         ports:
         - containerPort: 3306
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: "pw"
-        - name: MYSQL_DATABASE
-          value: "employees"
       imagePullSecrets:
       - name: ecr-secret

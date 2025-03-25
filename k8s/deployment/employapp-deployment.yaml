@@ -1,8 +1,8 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: employment-app-rs
-  namespace: employee-app
+  name: employapp-deployment
+  namespace: employapp
 spec:
   replicas: 3
   selector:
@@ -14,20 +14,13 @@ spec:
         app: employees
     spec:
       containers:
-      - name: employment-app
+      - name: employees
         image: 549079173707.dkr.ecr.us-east-1.amazonaws.com/employment-app:latest
-        resources:
-          requests:
-            cpu: 250m
-            memory: 250Mi
-          limits:
-            cpu: 500m
-            memory: 500Mi
         ports:
         - containerPort: 8080
         env:
         - name: DBHOST
-          value: "mysql.mysql-db.svc.cluster.local"
+          value: "mysql-service.mysqlapp.svc.cluster.local"
         - name: DBPORT
           value: "3306"
         - name: DBUSER
@@ -36,13 +29,5 @@ spec:
           value: "pw"
         - name: DATABASE
           value: "employees"
-        - name: APP_COLOR
-          value: "blue"
-        readinessProbe:
-          httpGet:
-            path: "/health"
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 5
       imagePullSecrets:
-      - name: ecr-secret
+        - name: ecr-secret
